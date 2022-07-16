@@ -4,12 +4,20 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import Products from './pages/Products';
 import Detail from './pages/Detail';
+import Login from './pages/Login';
 
 const Stack = createNativeStackNavigator();
 const Router = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen
+          name="LoginPage"
+          component={Login}
+          options={{
+            headerShown: false,
+          }}
+        />
         <Stack.Screen
           name="ProductPage"
           component={Products}
