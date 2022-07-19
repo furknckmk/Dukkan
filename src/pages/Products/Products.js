@@ -24,7 +24,6 @@ const handleProductSelect = id=>{
       return <Error />;
     }
     return <View>
-    <Button title="LogOut" onPress={()=>dispatch({type: 'SET_USER',payload:{user: null}})} />
     <FlatList data={data} renderItem={renderProducts}/>
      </View>;
 

@@ -5,11 +5,14 @@ import Loading from './components/Loading';
 import Products from './pages/Products';
 import Detail from './pages/Detail';
 import Login from './pages/Login';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 const Stack = createNativeStackNavigator();
 const Router = () => {
   const userSession = useSelector(s => s.user);
   const isAuthLoading = useSelector(s => s.isAuthLoading);
+  const dispatch = useDispatch();
   return (
     <NavigationContainer>
       {isAuthLoading ? (
@@ -34,6 +37,14 @@ const Router = () => {
               headerStyle: {backgroundColor: '#00a4ef'},
               headerTitleAlign: 'center',
               headerTitleStyle: {color: 'white'},
+              headerRight: () => (
+                <Icon
+                  name="logout"
+                  size={38}
+                  color="white"
+                  onPress={() => dispatch({type: 'REMOVE_USER'})}
+                />
+              ),
             }}
           />
 
