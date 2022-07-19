@@ -3,15 +3,16 @@ import React from 'react';
 import { Text, View,Image, Alert} from 'react-native';
 import {Formik} from 'formik';
 import * as yup from 'yup';
+import { useDispatch } from 'react-redux';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import styles from './Login.style';
 import Config from 'react-native-config';
 
 import usePost from '../../hooks/usePost';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 const Login = ({navigation})=>{
     const {data,loading,error,post} = usePost();
+    const dispatch = useDispatch();
 
 const LoginSchema = yup.object().shape({
 username: yup.string().min(3,({min})=>'Kullanici adi en az 3 karakter olmalidir').required('Kullanici adi gerekli '),
@@ -31,7 +32,7 @@ password: yup.string().min(5,({min})=>`Sifre en az ${min} karakter olmalidir`).r
         Alert.alert('Dukkan','Kullanici Bulunamadi');
         }
         else {
-            AsyncStorage.setItem('@USER',JSON.stringify(user));
+            dispatch({type: 'SET_USER', payload:{user}});
             navigation.navigate('ProductPage');
         }
 
@@ -59,7 +60,7 @@ password: yup.string().min(5,({min})=>`Sifre en az ${min} karakter olmalidir`).r
         {errors.username && touched.username  ? ( <Text style={styles.errors}>{(errors.username)}</Text>) : null}
 
         <Input placeholder="Sifrenizi Giriniz" value={values.password} onType={handleChange('password')}  iconName={'key'}
-            isSecure
+        isSecure
         />
 
         {(errors.password && touched.password) &&
